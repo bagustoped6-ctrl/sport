@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Sports Streaming</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Live Sports Streaming - Watch Live HD">
+    <meta property="og:description" content="Watch unlimited live sports streams instantly. Premium Live Streaming • No Buffer • HD Quality.">
+    <meta property="og:image" content="tes2.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:url" content="https://baseball2026.playrushgo.site">
+    <meta property="fb:app_id" content="">
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+
+        body{
+            font-family:Arial,sans-serif;
+            color:#fff;
+            text-align:center;
+            background:
+                linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.92)),
+                url('realistic-neon-lights-background_52683-60202.webp');
+            background-size:cover;
+            background-position:center;
+            background-attachment:fixed;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .banner-top{
+            width:100%;display:flex;justify-content:center;align-items:center;
+            padding:8px 0;background:rgba(0,0,0,0.5);flex-shrink:0;
+        }
+
+        .container{
+            flex:1;width:100%;padding:18px 16px 10px;
+            display:flex;flex-direction:column;align-items:center;
+        }
+
+        .banner-bottom{
+            width:100%;display:flex;justify-content:center;align-items:center;
+            padding:8px 0;background:rgba(0,0,0,0.4);margin-top:14px;
+        }
+
+        .live-badge{
+            background:linear-gradient(45deg,#ff0000,#ff3c3c);
+            padding:9px 20px;border-radius:40px;font-weight:bold;
+            letter-spacing:1px;display:inline-block;margin-bottom:10px;
+            box-shadow:0 0 18px rgba(255,0,0,0.8);animation:blink 1s infinite;
+            color:#fff;text-decoration:none;
+        }
+
+        @keyframes blink{0%{opacity:1;}50%{opacity:0.6;}100%{opacity:1;}}
+
+        h1{font-size:36px;margin-bottom:6px;text-shadow:0 0 15px rgba(255,255,255,0.35);}
+        .sub-text{color:#ddd;font-size:16px;margin-bottom:8px;}
+
+        .viewer-bar{
+            display:inline-flex;align-items:center;gap:7px;
+            background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+            border-radius:30px;padding:6px 16px;font-size:13px;color:#aaffaa;margin-bottom:8px;
+        }
+
+        .viewer-dot{
+            width:8px;height:8px;border-radius:50%;background:#00ff88;
+            box-shadow:0 0 6px #00ff88;animation:blink 1s infinite;flex-shrink:0;
+        }
+
+        .countdown-bar{
+            background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+            border-radius:30px;padding:7px 20px;font-size:14px;color:#ffd700;
+            margin-bottom:14px;display:inline-block;
+        }
+
+        /* Player Box */
+        .player-box{
+            position:relative;width:92%;max-width:680px;margin:0 auto;
+            border-radius:18px;overflow:hidden;
+            box-shadow:0 0 30px rgba(255,0,0,0.55), 0 0 80px rgba(255,0,0,0.25);
+            aspect-ratio:16/9;background:#000;
+        }
+
+        /* Gambar thumbnail — selalu tampil */
+        .player-thumb{
+            position:absolute;inset:0;z-index:1;
+        }
+
+        .player-thumb img{
+            width:100%;height:100%;object-fit:cover;display:block;
+        }
+
+        /* Overlay transparan di atas gambar */
+        .player-overlay{
+            position:absolute;inset:0;
+            background:linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.1));
+            z-index:2;
+        }
+
+        /* Tombol play */
+        .play-btn{
+            position:absolute;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:100px;height:100px;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(10px);
+            border:2px solid rgba(255,255,255,0.28);
+            box-shadow:0 0 25px rgba(255,0,0,0.6), 0 0 60px rgba(255,0,0,0.45);
+            animation:pulseGlow 1.8s infinite;
+            cursor:pointer;z-index:3;
+        }
+
+        .play-icon{color:#fff;font-size:46px;margin-left:8px;text-shadow:0 0 12px rgba(255,255,255,0.95);}
+
+        @keyframes pulseGlow{
+            0%{box-shadow:0 0 15px rgba(255,0,0,0.45), 0 0 40px rgba(255,0,0,0.22);}
+            50%{box-shadow:0 0 45px rgba(255,0,0,0.95), 0 0 85px rgba(255,0,0,0.58);}
+            100%{box-shadow:0 0 15px rgba(255,0,0,0.45), 0 0 40px rgba(255,0,0,0.22);}
+        }
+
+        /* Stream ready overlay — transparan di atas gambar */
+        .stream-ready{
+            position:absolute;inset:0;z-index:4;
+            display:none;flex-direction:column;align-items:center;justify-content:center;
+            background:rgba(0,0,0,0.65);
+            backdrop-filter:blur(3px);
+            border-radius:18px;padding:24px;
+        }
+
+        .stream-ready.active{display:flex;}
+
+        .stream-title{
+            font-size:22px;font-weight:bold;color:#00ff88;
+            margin-bottom:6px;text-shadow:0 0 10px rgba(0,255,136,0.7);
+        }
+
+        .stream-sub{font-size:14px;color:#ccc;margin-bottom:20px;}
+
+        .loading-bar-wrap{
+            width:80%;background:rgba(255,255,255,0.15);
+            border-radius:30px;height:14px;overflow:hidden;
+            margin-bottom:12px;border:1px solid rgba(255,255,255,0.2);
+        }
+
+        .loading-bar-fill{
+            height:100%;width:0%;border-radius:30px;
+            background:linear-gradient(90deg, #00ff88, #00cfff);
+            box-shadow:0 0 10px rgba(0,255,136,0.6);
+            transition:width 0.5s ease;
+        }
+
+        .loading-text{font-size:14px;color:#ffd700;}
+
+        .desc{margin-top:14px;color:#ddd;font-size:16px;}
+
+        .cta-btn{
+            display:inline-block;margin-top:16px;padding:16px 36px;
+            font-size:18px;font-weight:bold;color:#fff;text-decoration:none;
+            border-radius:60px;background:linear-gradient(45deg, #ff0000, #ff6a00);
+            box-shadow:0 0 20px rgba(255,0,0,0.75), 0 0 50px rgba(255,80,0,0.45);
+            animation:pulseBtn 1.3s infinite;
+        }
+
+        @keyframes pulseBtn{
+            0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}
+        }
+
+        @media(max-width:768px){
+            h1{font-size:26px;}
+            .play-btn{width:80px;height:80px;}
+            .play-icon{font-size:36px;}
+            .cta-btn{font-size:16px;padding:14px 28px;}
+            .stream-title{font-size:18px;}
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="banner-top">
+    <script>
+      atOptions = {
+        'key' : 'f0a9357fc524712b4e1f8906d53dbe9f',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/f0a9357fc524712b4e1f8906d53dbe9f/invoke.js"></script>
+</div>
+
+<div class="container">
+
+    <a class="live-badge" href="https://www.effectivecpmnetwork.com/a1spydzsci?key=866c161482a1edff7aed8b286d438fb4" target="_blank">🔴 LIVE NOW</a>
+
+    <h1>Watch Live HD Sports</h1>
+    <p class="sub-text">Premium Live Streaming • No Buffer • HD Quality</p>
+
+    <div class="viewer-bar">
+        <span class="viewer-dot"></span>
+        <span id="viewerCount">1,024</span> watching now
+    </div>
+
+    <div class="countdown-bar">⏱ Stream opens in <span id="timer">15</span> detik...</div>
+
+    <div class="player-box">
+
+        <!-- Gambar selalu tampil di belakang -->
+        <div class="player-thumb">
+            <img src="tes2.webp" alt="Live Sports">
+        </div>
+
+        <!-- Overlay transparan -->
+        <div class="player-overlay"></div>
+
+        <!-- Tombol play -->
+        <div class="play-btn" id="playBtn" onclick="handlePlay()">
+            <span class="play-icon">▶</span>
+        </div>
+
+        <!-- Stream ready overlay transparan di atas gambar -->
+        <div class="stream-ready" id="streamReady">
+            <div class="stream-title">✅ Your Stream is Ready!</div>
+            <div class="stream-sub">Connecting to live server...</div>
+            <div class="loading-bar-wrap">
+                <div class="loading-bar-fill" id="loadingFill"></div>
+            </div>
+            <div class="loading-text">Redirecting in <span id="loadTimer">15</span>s...</div>
+        </div>
+
+    </div>
+
+    <p class="desc">Watch unlimited live sports streams instantly.</p>
+
+    <a class="cta-btn" href="https://www.effectivecpmnetwork.com/bnakxjp1?key=5ef73cf852accd13f7b29b65ad5c0771" target="_blank">
+        ▶ WATCH LIVE NOW
+    </a>
+
+    <div class="banner-bottom">
+        <script>
+          atOptions = {
+            'key' : 'd95408cf651958681e0159f8c3b4a8d9',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/d95408cf651958681e0159f8c3b4a8d9/invoke.js"></script>
+    </div>
+
+</div>
+
+<script>
+    const SL2 = 'https://www.effectivecpmnetwork.com/wuh63wbf?key=ea01fbb3e9d1be2edd5817cf004f1379';
+    const SL4 = 'https://www.effectivecpmnetwork.com/sr7xky09e?key=37ef7743df0e688b7d9920221213d267';
+
+    function handlePlay() {
+        // Sembunyikan tombol play
+        document.getElementById('playBtn').style.display = 'none';
+
+        // Tampilkan stream ready overlay (gambar tetap terlihat di belakang)
+        document.getElementById('streamReady').classList.add('active');
+
+        // Loading bar 15 detik lalu redirect
+        let secs = 15;
+        const loadTimerEl = document.getElementById('loadTimer');
+        const fillEl = document.getElementById('loadingFill');
+
+        const interval = setInterval(() => {
+            secs--;
+            loadTimerEl.textContent = secs;
+            fillEl.style.width = ((15 - secs) / 15 * 100) + '%';
+
+            if (secs <= 0) {
+                clearInterval(interval);
+                window.location.href = SL2;
+            }
+        }, 1000);
+    }
+
+    // Countdown bar atas
+    let seconds = 15;
+    const timerEl = document.getElementById('timer');
+    const countdownBar = document.querySelector('.countdown-bar');
+
+    const countdown = setInterval(() => {
+        seconds--;
+        timerEl.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(countdown);
+            window.open(SL4, '_blank');
+            countdownBar.innerHTML = '✅ Stream opened! Enjoy watching 🎉';
+        }
+    }, 1000);
+
+    // Viewer count
+    let viewers = 1024;
+    const viewerEl = document.getElementById('viewerCount');
+    viewerEl.textContent = viewers.toLocaleString('en-US');
+
+    setInterval(() => {
+        const delta = Math.floor(Math.random() * 21) - 8;
+        viewers = Math.max(980, viewers + delta);
+        viewerEl.textContent = viewers.toLocaleString('en-US');
+    }, 3000);
+</script>
+
+</body>
+</html>

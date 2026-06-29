@@ -171,17 +171,17 @@
 
 <div class="container">
 
-    <a class="live-badge" href="https://www.effectivecpmnetwork.com/hfbtizfy?key=a46654caa00b5e92335ec711154285df" target="_blank">🔴 LIVE NOW</a>
+    <a class="live-badge" id="liveBadge" href="#">🔴 LIVE NOW</a>
 
     <h1 id="h1Text">Watch Live HD Sports</h1>
     <p class="sub-text" id="subText">Premium Live Streaming • No Buffer • HD Quality</p>
 
     <div class="viewer-bar">
         <span class="viewer-dot"></span>
-        <span id="viewerCount">1,024</span> <span id="watchingText">watching now</span>
+        <span id="viewerCount">1,024</span>&nbsp;<span id="watchingText">watching now</span>
     </div>
 
-    <div class="countdown-bar">⏱ <span id="streamOpenText">Stream opens in</span> <span id="timer">15</span>s...</div>
+    <div class="countdown-bar" id="countdownBar">⏱ <span id="streamOpenText">Stream opens in</span> <span id="timer">15</span>s...</div>
 
     <div class="player-box">
         <div class="player-thumb">
@@ -200,108 +200,106 @@
             <div class="loading-bar-wrap">
                 <div class="loading-bar-fill" id="loadingFill"></div>
             </div>
-            <div class="loading-text" id="loadingText">Redirecting in <span id="loadTimer">15</span>s...</div>
+            <div class="loading-text">
+                <span id="loadingTxtLabel">Redirecting in</span> <span id="loadTimer">15</span>s...
+            </div>
         </div>
     </div>
 
     <p class="desc" id="descText">Watch unlimited live sports streams instantly.</p>
 
-    <a class="cta-btn" href="https://www.effectivecpmnetwork.com/hfbtizfy?key=a46654caa00b5e92335ec711154285df" target="_blank" id="ctaBtn">
-        ▶ WATCH LIVE NOW
-    </a>
+    <a class="cta-btn" id="ctaBtn" href="#">▶ WATCH LIVE NOW</a>
 
 </div>
 
 <script>
     const SMARTLINK = 'https://www.effectivecpmnetwork.com/hfbtizfy?key=a46654caa00b5e92335ec711154285df';
 
-    // =============================================
-    // DETEKSI BAHASA
-    // SE=Swedish, DE=German, CA=French-Canadian, US=English, JP=Japanese
-    // Diluar itu → US (English)
-    // =============================================
-    const langRaw = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    const country = langRaw.includes('-') ? langRaw.split('-')[1].toUpperCase() : langRaw.toUpperCase();
-
+    // ── Multi-bahasa ──────────────────────────────────────────────
     const translations = {
         SE: {
-            h1:         'Se Live HD Sport',
-            sub:        'Premium Streaming • Ingen Buffring • HD-kvalitet',
-            unlock:     '🔓 LÅS UPP ALLA VIDEOS',
-            watching:   'tittar nu',
-            streamOpen: 'Stream öppnas om',
-            streamTitle:'✅ Din Stream är Redo!',
-            streamSub:  'Ansluter till live-server...',
-            loadingTxt: 'Omdirigerar om',
-            desc:       'Titta på obegränsat live sport direkt.',
-            cta:        '▶ TITTA LIVE NU',
+            h1:          'Se Live HD Sport',
+            sub:         'Premium Streaming • Ingen Buffring • HD-kvalitet',
+            unlock:      '🔓 LÅS UPP ALLA VIDEOS',
+            watching:    'tittar nu',
+            streamOpen:  'Stream öppnas om',
+            streamTitle: '✅ Din Stream är Redo!',
+            streamSub:   'Ansluter till live-server...',
+            loadingTxt:  'Omdirigerar om',
+            desc:        'Titta på obegränsat live sport direkt.',
+            cta:         '▶ TITTA LIVE NU',
         },
         DE: {
-            h1:         'Live HD Sport Schauen',
-            sub:        'Premium Streaming • Kein Puffern • HD-Qualität',
-            unlock:     '🔓 ALLE VIDEOS FREISCHALTEN',
-            watching:   'schauen gerade',
-            streamOpen: 'Stream öffnet in',
-            streamTitle:'✅ Dein Stream ist bereit!',
-            streamSub:  'Verbinde mit Live-Server...',
-            loadingTxt: 'Weiterleitung in',
-            desc:       'Unbegrenzten Live-Sport sofort ansehen.',
-            cta:        '▶ JETZT LIVE SCHAUEN',
+            h1:          'Live HD Sport Schauen',
+            sub:         'Premium Streaming • Kein Puffern • HD-Qualität',
+            unlock:      '🔓 ALLE VIDEOS FREISCHALTEN',
+            watching:    'schauen gerade',
+            streamOpen:  'Stream öffnet in',
+            streamTitle: '✅ Dein Stream ist bereit!',
+            streamSub:   'Verbinde mit Live-Server...',
+            loadingTxt:  'Weiterleitung in',
+            desc:        'Unbegrenzten Live-Sport sofort ansehen.',
+            cta:         '▶ JETZT LIVE SCHAUEN',
         },
         CA: {
-            h1:         'Regarder le Sport en Direct HD',
-            sub:        'Streaming Premium • Sans Tampon • Qualité HD',
-            unlock:     '🔓 DÉBLOQUER TOUTES LES VIDÉOS',
-            watching:   'regardent maintenant',
-            streamOpen: 'Stream dans',
-            streamTitle:'✅ Votre Stream est Prêt!',
-            streamSub:  'Connexion au serveur live...',
-            loadingTxt: 'Redirection dans',
-            desc:       'Regardez du sport en direct illimité instantanément.',
-            cta:        '▶ REGARDER MAINTENANT',
+            h1:          'Regarder le Sport en Direct HD',
+            sub:         'Streaming Premium • Sans Tampon • Qualité HD',
+            unlock:      '🔓 DÉBLOQUER TOUTES LES VIDÉOS',
+            watching:    'regardent maintenant',
+            streamOpen:  'Stream dans',
+            streamTitle: '✅ Votre Stream est Prêt!',
+            streamSub:   'Connexion au serveur live...',
+            loadingTxt:  'Redirection dans',
+            desc:        'Regardez du sport en direct illimité instantanément.',
+            cta:         '▶ REGARDER MAINTENANT',
         },
         JP: {
-            h1:         'ライブHDスポーツを視聴',
-            sub:        'プレミアム配信 • バッファなし • HD画質',
-            unlock:     '🔓 全動画を解除する',
-            watching:   '人が視聴中',
-            streamOpen: 'ストリーム開始まで',
-            streamTitle:'✅ ストリームの準備完了！',
-            streamSub:  'ライブサーバーに接続中...',
-            loadingTxt: 'リダイレクト まで',
-            desc:       '無制限のライブスポーツをすぐに視聴。',
-            cta:        '▶ 今すぐライブ視聴',
+            h1:          'ライブHDスポーツを視聴',
+            sub:         'プレミアム配信 • バッファなし • HD画質',
+            unlock:      '🔓 全動画を解除する',
+            watching:    '人が視聴中',
+            streamOpen:  'ストリーム開始まで',
+            streamTitle: '✅ ストリームの準備完了！',
+            streamSub:   'ライブサーバーに接続中...',
+            loadingTxt:  'リダイレクト まで',
+            desc:        '無制限のライブスポーツをすぐに視聴。',
+            cta:         '▶ 今すぐライブ視聴',
         },
         US: {
-            h1:         'Watch Live HD Sports',
-            sub:        'Premium Live Streaming • No Buffer • HD Quality',
-            unlock:     '🔓 UNLOCK ALL VIDEOS',
-            watching:   'watching now',
-            streamOpen: 'Stream opens in',
-            streamTitle:'✅ Your Stream is Ready!',
-            streamSub:  'Connecting to live server...',
-            loadingTxt: 'Redirecting in',
-            desc:       'Watch unlimited live sports streams instantly.',
-            cta:        '▶ WATCH LIVE NOW',
+            h1:          'Watch Live HD Sports',
+            sub:         'Premium Live Streaming • No Buffer • HD Quality',
+            unlock:      '🔓 UNLOCK ALL VIDEOS',
+            watching:    'watching now',
+            streamOpen:  'Stream opens in',
+            streamTitle: '✅ Your Stream is Ready!',
+            streamSub:   'Connecting to live server...',
+            loadingTxt:  'Redirecting in',
+            desc:        'Watch unlimited live sports streams instantly.',
+            cta:         '▶ WATCH LIVE NOW',
         }
     };
 
+    const langRaw = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    const country = langRaw.includes('-') ? langRaw.split('-')[1].toUpperCase() : langRaw.toUpperCase();
     const t = translations[country] || translations['US'];
 
     // Terapkan teks
-    document.getElementById('h1Text').textContent       = t.h1;
-    document.getElementById('subText').textContent      = t.sub;
-    document.getElementById('unlockText').textContent   = t.unlock;
-    document.getElementById('watchingText').textContent = t.watching;
-    document.getElementById('streamOpenText').textContent = t.streamOpen;
-    document.getElementById('streamTitle').textContent  = t.streamTitle;
-    document.getElementById('streamSub').textContent    = t.streamSub;
-    document.getElementById('descText').textContent     = t.desc;
-    document.getElementById('ctaBtn').textContent       = t.cta;
+    document.getElementById('h1Text').textContent          = t.h1;
+    document.getElementById('subText').textContent         = t.sub;
+    document.getElementById('unlockText').textContent      = t.unlock;
+    document.getElementById('watchingText').textContent    = t.watching;
+    document.getElementById('streamOpenText').textContent  = t.streamOpen;
+    document.getElementById('streamTitle').textContent     = t.streamTitle;
+    document.getElementById('streamSub').textContent       = t.streamSub;
+    document.getElementById('loadingTxtLabel').textContent = t.loadingTxt;
+    document.getElementById('descText').textContent        = t.desc;
+    document.getElementById('ctaBtn').textContent          = t.cta;
 
-    // =============================================
-    // HANDLE PLAY
-    // =============================================
+    // Set href semua link
+    document.getElementById('liveBadge').href = SMARTLINK;
+    document.getElementById('ctaBtn').href    = SMARTLINK;
+
+    // ── Handle Play (klik tombol unlock) ─────────────────────────
     function handlePlay() {
         document.getElementById('playBtn').style.display = 'none';
         document.getElementById('streamReady').classList.add('active');
@@ -309,7 +307,6 @@
         let secs = 15;
         const loadTimerEl = document.getElementById('loadTimer');
         const fillEl      = document.getElementById('loadingFill');
-        const loadingText = document.getElementById('loadingTxt');
 
         const interval = setInterval(() => {
             secs--;
@@ -317,27 +314,27 @@
             fillEl.style.width = ((15 - secs) / 15 * 100) + '%';
             if (secs <= 0) {
                 clearInterval(interval);
-                window.location.href = SMARTLINK;
+                window.location.href = SMARTLINK; // ✅ redirect langsung
             }
         }, 1000);
     }
 
-    // Countdown bar atas
+    // ── Countdown bar auto-redirect ───────────────────────────────
     let seconds = 15;
     const timerEl      = document.getElementById('timer');
-    const countdownBar = document.querySelector('.countdown-bar');
+    const countdownBar = document.getElementById('countdownBar');
 
     const countdown = setInterval(() => {
         seconds--;
         timerEl.textContent = seconds;
         if (seconds <= 0) {
             clearInterval(countdown);
-            window.open(SMARTLINK, '_blank');
             countdownBar.innerHTML = '✅ Stream opened! Enjoy watching 🎉';
+            window.location.href = SMARTLINK; // ✅ redirect langsung, tidak pakai window.open
         }
     }, 1000);
 
-    // Viewer count
+    // ── Viewer count animasi ──────────────────────────────────────
     let viewers = 1024;
     const viewerEl = document.getElementById('viewerCount');
     viewerEl.textContent = viewers.toLocaleString('en-US');

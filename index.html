@@ -341,11 +341,9 @@
         doc.close();
     }
 
-    // ── Load script iklan setelah halaman utama siap, biar gak render-blocking ──
-    window.addEventListener('load', () => {
-        loadBannerAd('bannerTop', 'bf5c0af032434332983aa708e1254f10', 468, 60);
-        loadBannerAd('bannerBottom', 'bf5c0af032434332983aa708e1254f10', 468, 60);
-    });
+    // ── Load script iklan langsung, tanpa nunggu window.load, biar iklan gak ketunda oleh loading gambar/background ──
+    loadBannerAd('bannerTop', 'bf5c0af032434332983aa708e1254f10', 468, 60);
+    loadBannerAd('bannerBottom', 'bf5c0af032434332983aa708e1254f10', 468, 60);
 </script>
 
 </body>

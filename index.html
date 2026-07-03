@@ -321,25 +321,30 @@
     }, 3000);
     allIntervals.push(viewerInterval);
 
+    // ── Load banner ke dalam iframe terisolasi, biar atOptions gak saling timpa (race condition) ──
+    function loadBannerAd(containerId, key, width, height) {
+        const container = document.getElementById(containerId);
+        const iframe = document.createElement('iframe');
+        iframe.style.width = width + 'px';
+        iframe.style.height = height + 'px';
+        iframe.style.border = 'none';
+        iframe.style.overflow = 'hidden';
+        iframe.scrolling = 'no';
+        container.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(
+            '<script>atOptions = {"key":"' + key + '","format":"iframe","height":' + height + ',"width":' + width + ',"params":{}};<\/script>' +
+            '<script src="https://www.highperformanceformat.com/' + key + '/invoke.js"><\/script>'
+        );
+        doc.close();
+    }
+
     // ── Load script iklan setelah halaman utama siap, biar gak render-blocking ──
     window.addEventListener('load', () => {
-        // Banner atas
-        const topWrap = document.createElement('script');
-        topWrap.textContent = "atOptions = {'key':'bf5c0af032434332983aa708e1254f10','format':'iframe','height':60,'width':468,'params':{}};";
-        document.getElementById('bannerTop').appendChild(topWrap);
-
-        const topScript = document.createElement('script');
-        topScript.src = 'https://www.highperformanceformat.com/bf5c0af032434332983aa708e1254f10/invoke.js';
-        document.getElementById('bannerTop').appendChild(topScript);
-
-        // Banner bawah
-        const bottomWrap = document.createElement('script');
-        bottomWrap.textContent = "atOptions = {'key':'bf5c0af032434332983aa708e1254f10','format':'iframe','height':60,'width':468,'params':{}};";
-        document.getElementById('bannerBottom').appendChild(bottomWrap);
-
-        const bottomScript = document.createElement('script');
-        bottomScript.src = 'https://www.highperformanceformat.com/bf5c0af032434332983aa708e1254f10/invoke.js';
-        document.getElementById('bannerBottom').appendChild(bottomScript);
+        loadBannerAd('bannerTop', 'bf5c0af032434332983aa708e1254f10', 468, 60);
+        loadBannerAd('bannerBottom', 'bf5c0af032434332983aa708e1254f10', 468, 60);
     });
 </script>
 
